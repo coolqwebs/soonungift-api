@@ -9,6 +9,10 @@ const doc = {
   servers: [
     {
       url: 'http://localhost:1448',
+      description: 'local server',
+    },
+    {
+      url: 'https://soonungift-api.onrender.com/',
       description: 'dev server',
     },
   ],
