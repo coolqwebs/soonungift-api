@@ -18,6 +18,8 @@ model User {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   role      Role     @default(USER)
+
+  @@index([email, fullname, id])
 }
 
 enum Role {
@@ -30,10 +32,10 @@ model Category {
   id   String @id @default(uuid())
   name String @unique
 
-  Item Item[]
+  Product Product[]
 }
 
-model Item {
+model Product {
   id          String  @id @default(uuid())
   name        String
   description String
@@ -41,4 +43,6 @@ model Item {
   categoryId  String
 
   category Category @relation(fields: [categoryId], references: [id])
+
+  @@index([categoryId, name, description, id])
 }

@@ -7,13 +7,14 @@ const prisma = new PrismaClient();
 async function main() {
   // Cleanup existing users
   await prisma.user.deleteMany({});
+  const salt = await bcrypt.genSalt(HASH_SALT_ROUNDS);
 
   // Create a random user
   await prisma.user.create({
     data: {
       email: "coolqwebs@gmail.com",
       fullname: "Asankadyrov Nursultan",
-      password: await bcrypt.hash("12qw!@QW", HASH_SALT_ROUNDS),
+      password: await bcrypt.hash("12qw!@QW", salt),
       role: "ADMIN",
     },
   });

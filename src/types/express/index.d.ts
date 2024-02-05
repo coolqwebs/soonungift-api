@@ -1,5 +1,9 @@
 declare namespace Express {
   interface Request {
-    user?: Record<string, string>;
+    user?: {
+      userId: string;
+      userEmail: string;
+      [key: string]: any;
+    };
   }
 }

@@ -7,7 +7,11 @@
   },
   "servers": [
     {
-      "url": "http://localhost:8080",
+      "url": "http://localhost:1448",
+      "description": "local server"
+    },
+    {
+      "url": "https://soonungift-api.onrender.com/",
       "description": "dev server"
     }
   ],
@@ -115,7 +119,7 @@
         ]
       }
     },
-    "/api/auth/refresh_token": {
+    "/api/auth/delete_token": {
       "delete": {
         "tags": [
           "Auth"

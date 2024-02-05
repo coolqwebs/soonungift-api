@@ -1,5 +1,5 @@
-import { Request, Response } from 'express';
-import prisma from '../db';
+import { Request, Response } from "express";
+import prisma from "../db";
 
 export const getAllUsers = async (req: Request, res: Response) => {
   // #swagger.tags = ['Users']

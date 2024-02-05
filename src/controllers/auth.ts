@@ -96,10 +96,7 @@ export const loginController = async (req: Request, res: Response) => {
     }
 
     // TODO: remove as string
-    const isPasswordValid = await bcrypt.compare(
-      password,
-      user.password as string
-    );
+    const isPasswordValid = await bcrypt.compare(password, user.password as string);
 
     if (!isPasswordValid) {
       /* #swagger.responses[400] = {
@@ -129,6 +126,7 @@ export const loginController = async (req: Request, res: Response) => {
     res.status(500).json({ error: error.message });
   }
 };
+
 export const refreshController = async (req: Request, res: Response) => {
   // #swagger.tags = ['Auth']
   // #swagger.summary = 'Refresh Token'
@@ -137,18 +135,15 @@ export const refreshController = async (req: Request, res: Response) => {
             "cookieAuth": []
     }] */
   try {
-    const refreshToken = req.cookies.refresh_token;
+    const refreshToken = req.cookies["refresh_token"];
 
     if (!refreshToken) return res.sendStatus(403);
 
-    jwt.verify(
-      refreshToken,
-      process.env.JWT_REFRESH_SECRET,
-      (error: any, user: any) => {
-        if (error) return res.status(403).send({ error: error.message });
-        const tokens = jwtGenerator({ userId: user.id, userEmail: user.email });
-        res.cookie("refresh_token", tokens.refreshToken, { httpOnly: true });
-        /* #swagger.responses[201] = {
+    jwt.verify(refreshToken, process.env.JWT_REFRESH_SECRET, (error: any, user: any) => {
+      if (error) return res.status(403).send({ error: error.message });
+      const tokens = jwtGenerator({ userId: user.userId, userEmail: user.userEmail });
+      res.cookie("refresh_token", tokens.refreshToken, { httpOnly: true });
+      /* #swagger.responses[201] = {
             description: "Created",
             content: {
                 "application/json": {
@@ -159,13 +154,13 @@ export const refreshController = async (req: Request, res: Response) => {
             }
           }   
         */
-        res.status(201).json(tokens);
-      }
-    );
+      res.status(201).json(tokens);
+    });
   } catch (error: any) {
     res.status(500).json({ error: error.message });
   }
 };
+
 export const deleteRefreshController = async (req: Request, res: Response) => {
   // #swagger.tags = ['Auth']
   // #swagger.summary = 'Clear refresh token from cookies'

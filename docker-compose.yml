@@ -2,18 +2,27 @@ version: '3.9'
 
 services:
   postgres:
-    container_name: pg_soonun
-    image: postgres:12
+    image: postgres:15
     restart: always
     environment:
       POSTGRES_USER: soonungift
       POSTGRES_PASSWORD: soonungift
-      POSTGRES_DB: soonungift
+      POSTGRES_DB: soonungift_db
     ports:
       - 5432:5432
     volumes:
-      - pgdata:/var/lib/postgres/data
+      - postgres-data:/var/lib/postgresql/data
+  # backend:  
+  #   build: .
+  #   ports:
+  #     1448:1448
+  #   volumes:
+  #     - .:/usr/src/app 
+  #     - /usr/src/app/node_modules
+  #   command: npm run build && npm run start
+  #   environment:
+  #     - PORT: 1448
 
 
 volumes:
-  pgdata: {}
+  postgres-data: {}
