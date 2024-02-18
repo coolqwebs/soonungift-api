@@ -11,7 +11,7 @@
       "description": "local server"
     },
     {
-      "url": "https://soonungift-api.onrender.com/",
+      "url": "https://soonungift-api.onrender.com",
       "description": "dev server"
     }
   ],
@@ -27,8 +27,8 @@
           "201": {
             "description": "Created"
           },
-          "400": {
-            "description": "Bad Request"
+          "409": {
+            "description": "Conflict"
           },
           "500": {
             "description": "Internal Server Error"
@@ -94,6 +94,9 @@
         "summary": "Refresh Token",
         "description": "",
         "responses": {
+          "200": {
+            "description": "OK"
+          },
           "201": {
             "description": "Created",
             "content": {
@@ -243,6 +246,857 @@
           }
         }
       }
+    },
+    "/api/products/": {
+      "get": {
+        "tags": [
+          "Products"
+        ],
+        "summary": "Get All Products",
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetAllProductsResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Products"
+        ],
+        "summary": "Create Product",
+        "description": "",
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": [],
+            "cookieAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "description": {
+                    "type": "string"
+                  },
+                  "price": {
+                    "type": "int"
+                  },
+                  "image": {
+                    "type": "string",
+                    "format": "binary"
+                  },
+                  "categoryId": {
+                    "type": "string"
+                  },
+                  "brandId": {
+                    "type": "string"
+                  },
+                  "occassionId": {
+                    "type": "string"
+                  },
+                  "deliveryType": {
+                    "$ref": "#/components/schemas/DeliveryType"
+                  }
+                },
+                "required": [
+                  "name",
+                  "description",
+                  "price",
+                  "categoryId",
+                  "deliveryType"
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/products/{id}": {
+      "get": {
+        "tags": [
+          "Products"
+        ],
+        "summary": "Get Product By Id",
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetProductByIdResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Products"
+        ],
+        "summary": "Edit Product",
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetProductByIdResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": [],
+            "cookieAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "description": {
+                    "type": "string"
+                  },
+                  "price": {
+                    "type": "int"
+                  },
+                  "image": {
+                    "type": "string",
+                    "format": "binary"
+                  },
+                  "categoryId": {
+                    "type": "string"
+                  },
+                  "brandId": {
+                    "type": "string"
+                  },
+                  "occassionId": {
+                    "type": "string"
+                  },
+                  "deliveryType": {
+                    "$ref": "#/components/schemas/DeliveryType"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "Products"
+        ],
+        "summary": "Publish Product",
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": [],
+            "cookieAuth": []
+          }
+        ]
+      },
+      "delete": {
+        "tags": [
+          "Products"
+        ],
+        "summary": "Delete Product",
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": [],
+            "cookieAuth": []
+          }
+        ]
+      }
+    },
+    "/api/categories/": {
+      "get": {
+        "tags": [
+          "Categories"
+        ],
+        "summary": "Get All Categories",
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetAllCategoriesResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Categories"
+        ],
+        "summary": "Create Category",
+        "description": "",
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": [],
+            "cookieAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "image": {
+                    "type": "string",
+                    "format": "binary"
+                  }
+                },
+                "required": [
+                  "name"
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/categories/{id}": {
+      "get": {
+        "tags": [
+          "Categories"
+        ],
+        "summary": "Get Category By Id",
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetCategoryResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Categories"
+        ],
+        "summary": "Update Category",
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetCategoryResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": [],
+            "cookieAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "image": {
+                    "type": "string",
+                    "format": "binary"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Categories"
+        ],
+        "summary": "Delete Category",
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": [],
+            "cookieAuth": []
+          }
+        ]
+      }
+    },
+    "/api/brands/": {
+      "get": {
+        "tags": [
+          "Brands"
+        ],
+        "summary": "Get All Brands",
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetAllBrandsResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Brands"
+        ],
+        "summary": "Create Brand",
+        "description": "",
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": [],
+            "cookieAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "logo": {
+                    "type": "string",
+                    "format": "binary"
+                  }
+                },
+                "required": [
+                  "name"
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/brands/{id}": {
+      "get": {
+        "tags": [
+          "Brands"
+        ],
+        "summary": "Get Brand By Id",
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetBrandResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Brands"
+        ],
+        "summary": "Update Brand",
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetBrandResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": [],
+            "cookieAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "logo": {
+                    "type": "string",
+                    "format": "binary"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Brands"
+        ],
+        "summary": "Delete Brand",
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": [],
+            "cookieAuth": []
+          }
+        ]
+      }
+    },
+    "/api/occasions/": {
+      "get": {
+        "tags": [
+          "Occasions"
+        ],
+        "summary": "Get All Occasions",
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetAllOccasionsResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Occasions"
+        ],
+        "summary": "Create Occasion",
+        "description": "",
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": [],
+            "cookieAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "image": {
+                    "type": "string",
+                    "format": "binary"
+                  }
+                },
+                "required": [
+                  "name"
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/occasions/{id}": {
+      "get": {
+        "tags": [
+          "Occasions"
+        ],
+        "summary": "Get Occasion By Id",
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetOccasionResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Occasions"
+        ],
+        "summary": "Update Occasion",
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetOccasionResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": [],
+            "cookieAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "image": {
+                    "type": "string",
+                    "format": "binary"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Occasions"
+        ],
+        "summary": "Delete Occasion",
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": [],
+            "cookieAuth": []
+          }
+        ]
+      }
     }
   },
   "components": {
@@ -260,6 +1114,13 @@
       }
     },
     "schemas": {
+      "DeliveryType": {
+        "type": "string",
+        "enum": [
+          "eGift",
+          "Delivery"
+        ]
+      },
       "RegisterBody": {
         "type": "object",
         "properties": {
@@ -287,11 +1148,11 @@
         "properties": {
           "email": {
             "type": "string",
-            "example": "johndoe@gmail.com"
+            "example": "coolqwebs@gmail.com"
           },
           "password": {
             "type": "string",
-            "example": "john_doe"
+            "example": "12qw!@QW"
           }
         },
         "required": [
@@ -302,10 +1163,6 @@
       "UpdateUserProfileBody": {
         "type": "object",
         "properties": {
-          "email": {
-            "type": "string",
-            "example": "sasai_kudasai@gmail.com"
-          },
           "fullname": {
             "type": "string",
             "example": "trahni menya"
@@ -338,10 +1195,6 @@
               "type": "string",
               "example": "John Doe"
             },
-            "password": {
-              "type": "string",
-              "example": "john_doe"
-            },
             "createdAt": {
               "type": "string",
               "example": "2024-02-03T13:17:37.878Z"
@@ -368,10 +1221,6 @@
             "type": "string",
             "example": "John Doe"
           },
-          "password": {
-            "type": "string",
-            "example": "john_doe"
-          },
           "createdAt": {
             "type": "string",
             "example": "2024-02-03T13:17:37.878Z"
@@ -383,6 +1232,320 @@
           "role": {
             "type": "string",
             "example": "USER"
+          }
+        }
+      },
+      "GetAllProductsResponse": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "example": "string"
+            },
+            "name": {
+              "type": "string",
+              "example": "string"
+            },
+            "description": {
+              "type": "string",
+              "example": "string"
+            },
+            "published": {
+              "type": "boolean",
+              "example": false
+            },
+            "price": {
+              "type": "number",
+              "example": 123
+            },
+            "categoryId": {
+              "type": "string",
+              "example": "string"
+            },
+            "brandId": {
+              "type": "string",
+              "example": "string"
+            },
+            "occasionId": {
+              "type": "string",
+              "example": "string"
+            },
+            "category": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "example": "string"
+                },
+                "name": {
+                  "type": "string",
+                  "example": "string"
+                },
+                "image": {
+                  "type": "string",
+                  "example": "string"
+                }
+              }
+            },
+            "brand": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "example": "string"
+                },
+                "name": {
+                  "type": "string",
+                  "example": "string"
+                },
+                "logo": {
+                  "type": "string",
+                  "example": "string"
+                }
+              }
+            },
+            "occasion": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "example": "string"
+                },
+                "name": {
+                  "type": "string",
+                  "example": "string"
+                },
+                "image": {
+                  "type": "string",
+                  "example": "string"
+                }
+              }
+            },
+            "deliveryType": {
+              "type": "string",
+              "example": "string"
+            },
+            "createdAt": {
+              "type": "string",
+              "example": "2024-02-03T13:17:37.878Z"
+            },
+            "updatedAt": {
+              "type": "string",
+              "example": "2024-02-03T16:15:37.746Z"
+            }
+          }
+        }
+      },
+      "GetProductByIdResponse": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "example": "string"
+          },
+          "name": {
+            "type": "string",
+            "example": "string"
+          },
+          "description": {
+            "type": "string",
+            "example": "string"
+          },
+          "published": {
+            "type": "boolean",
+            "example": false
+          },
+          "price": {
+            "type": "number",
+            "example": 123
+          },
+          "categoryId": {
+            "type": "string",
+            "example": "string"
+          },
+          "brandId": {
+            "type": "string",
+            "example": "string"
+          },
+          "occasionId": {
+            "type": "string",
+            "example": "string"
+          },
+          "category": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "example": "string"
+              },
+              "name": {
+                "type": "string",
+                "example": "string"
+              },
+              "image": {
+                "type": "string",
+                "example": "string"
+              }
+            }
+          },
+          "brand": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "example": "string"
+              },
+              "name": {
+                "type": "string",
+                "example": "string"
+              },
+              "logo": {
+                "type": "string",
+                "example": "string"
+              }
+            }
+          },
+          "occasion": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "example": "string"
+              },
+              "name": {
+                "type": "string",
+                "example": "string"
+              },
+              "image": {
+                "type": "string",
+                "example": "string"
+              }
+            }
+          },
+          "deliveryType": {
+            "type": "string",
+            "example": "string"
+          },
+          "createdAt": {
+            "type": "string",
+            "example": "2024-02-03T13:17:37.878Z"
+          },
+          "updatedAt": {
+            "type": "string",
+            "example": "2024-02-03T16:15:37.746Z"
+          }
+        }
+      },
+      "GetAllCategoriesResponse": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "example": "string"
+            },
+            "name": {
+              "type": "string",
+              "example": "string"
+            },
+            "image": {
+              "type": "string",
+              "example": "string"
+            }
+          }
+        }
+      },
+      "GetCategoryResponse": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "example": "string"
+          },
+          "name": {
+            "type": "string",
+            "example": "string"
+          },
+          "image": {
+            "type": "string",
+            "example": "string"
+          }
+        }
+      },
+      "GetAllBrandsResponse": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "example": "string"
+            },
+            "name": {
+              "type": "string",
+              "example": "string"
+            },
+            "logo": {
+              "type": "string",
+              "example": "string"
+            }
+          }
+        }
+      },
+      "GetBrandResponse": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "example": "string"
+          },
+          "name": {
+            "type": "string",
+            "example": "string"
+          },
+          "logo": {
+            "type": "string",
+            "example": "string"
+          }
+        }
+      },
+      "GetAllOccasionsResponse": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "example": "string"
+            },
+            "name": {
+              "type": "string",
+              "example": "string"
+            },
+            "image": {
+              "type": "string",
+              "example": "string"
+            }
+          }
+        }
+      },
+      "GetOccasionResponse": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "example": "string"
+          },
+          "name": {
+            "type": "string",
+            "example": "string"
+          },
+          "image": {
+            "type": "string",
+            "example": "string"
           }
         }
       }

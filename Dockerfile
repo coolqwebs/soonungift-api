@@ -22,9 +22,13 @@ RUN npm ci
 
 COPY prisma ./prisma
 
+COPY public ./public
+
 RUN npx prisma generate
 
 RUN npx prisma migrate deploy
+
+RUN npx prisma db seed
 
 COPY . .
 

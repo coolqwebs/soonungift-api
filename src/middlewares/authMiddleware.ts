@@ -1,29 +1,29 @@
-import type { NextFunction, Request, Response } from "express";
-import "dotenv/config";
-import jwt from "jsonwebtoken";
+import type { NextFunction, Request, Response } from "express"
+import "dotenv/config"
+import jwt from "jsonwebtoken"
 
 const authMiddleware = (req: Request, res: Response, next: NextFunction) => {
-  const authHeader = req.headers.authorization;
+  const authHeader = req.headers.authorization
 
   if (!authHeader) {
-    return res.sendStatus(401);
+    return res.sendStatus(401)
   }
 
   try {
-    const token = (authHeader as string).split(" ")[1];
+    const token = (authHeader as string).split(" ")[1]
 
     jwt.verify(token, process.env.JWT_ACCESS_SECRET, (error: any, user: any) => {
       if (error) {
-        return res.sendStatus(403);
+        return res.status(403).send("suka")
       }
 
-      console.log("Auth middleware user:", user);
-      req.user = user;
-      next();
-    });
+      console.log("Auth middleware user:", user)
+      req.user = user
+      next()
+    })
   } catch (error) {
-    return res.sendStatus(401);
+    return res.sendStatus(401)
   }
-};
+}
 
-export default authMiddleware;
+export default authMiddleware

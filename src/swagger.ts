@@ -1,4 +1,4 @@
-import swaggerAutogen from "swagger-autogen";
+import swaggerAutogen from "swagger-autogen"
 
 const doc = {
   info: {
@@ -32,17 +32,20 @@ const doc = {
       },
     },
     schemas: {
+      DeliveryType: {
+        type: "string",
+        "@enum": ["eGift", "Delivery"],
+      },
       RegisterBody: {
         $email: "johndoe@gmail.com",
         $fullname: "John Doe",
         $password: "john_doe",
       },
       LoginBody: {
-        $email: "johndoe@gmail.com",
-        $password: "john_doe",
+        $email: "coolqwebs@gmail.com",
+        $password: "12qw!@QW",
       },
       UpdateUserProfileBody: {
-        email: "sasai_kudasai@gmail.com",
         fullname: "trahni menya",
       },
       TokensResponse: {
@@ -53,7 +56,6 @@ const doc = {
         {
           email: "johndoe@gmail.com",
           fullname: "John Doe",
-          password: "john_doe",
           createdAt: "2024-02-03T13:17:37.878Z",
           updatedAt: "2024-02-03T16:15:37.746Z",
           role: "USER",
@@ -62,16 +64,109 @@ const doc = {
       GetUserProfileResponse: {
         email: "johndoe@gmail.com",
         fullname: "John Doe",
-        password: "john_doe",
         createdAt: "2024-02-03T13:17:37.878Z",
         updatedAt: "2024-02-03T16:15:37.746Z",
         role: "USER",
       },
+      GetAllProductsResponse: [
+        {
+          id: "string",
+          name: "string",
+          description: "string",
+          published: false,
+          price: 123,
+          categoryId: "string",
+          brandId: "string",
+          occasionId: "string",
+          category: {
+            id: "string",
+            name: "string",
+            image: "string",
+          },
+          brand: {
+            id: "string",
+            name: "string",
+            logo: "string",
+          },
+          occasion: {
+            id: "string",
+            name: "string",
+            image: "string",
+          },
+          deliveryType: "string",
+          createdAt: "2024-02-03T13:17:37.878Z",
+          updatedAt: "2024-02-03T16:15:37.746Z",
+        },
+      ],
+      GetProductByIdResponse: {
+        id: "string",
+        name: "string",
+        description: "string",
+        published: false,
+        price: 123,
+        categoryId: "string",
+        brandId: "string",
+        occasionId: "string",
+        category: {
+          id: "string",
+          name: "string",
+          image: "string",
+        },
+        brand: {
+          id: "string",
+          name: "string",
+          logo: "string",
+        },
+        occasion: {
+          id: "string",
+          name: "string",
+          image: "string",
+        },
+        deliveryType: "string",
+        createdAt: "2024-02-03T13:17:37.878Z",
+        updatedAt: "2024-02-03T16:15:37.746Z",
+      },
+      GetAllCategoriesResponse: [
+        {
+          id: "string",
+          name: "string",
+          image: "string",
+        },
+      ],
+      GetCategoryResponse: {
+        id: "string",
+        name: "string",
+        image: "string",
+      },
+      GetAllBrandsResponse: [
+        {
+          id: "string",
+          name: "string",
+          logo: "string",
+        },
+      ],
+      GetBrandResponse: {
+        id: "string",
+        name: "string",
+        logo: "string",
+      },
+      GetAllOccasionsResponse: [
+        {
+          id: "string",
+          name: "string",
+          image: "string",
+        },
+      ],
+      GetOccasionResponse: {
+        id: "string",
+        name: "string",
+        image: "string",
+      },
     },
   },
-};
+}
 
-const outputFile = "./swagger_output.json";
-const endpointsFiles = ["./src/index.ts"];
+const outputFile = "./swagger_output.json"
+const endpointsFiles = ["./src/index.ts"]
 
-swaggerAutogen({ openapi: "3.0.0" })(outputFile, endpointsFiles, doc);
+swaggerAutogen({ openapi: "3.0.0" })(outputFile, endpointsFiles, doc)

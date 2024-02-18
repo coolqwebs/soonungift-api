@@ -29,20 +29,49 @@ enum Role {
 }
 
 model Category {
+  id      String    @id @default(uuid())
+  name    String    @unique
+  image   String
+  Product Product[]
+}
+
+model Occasion {
+  id      String    @id @default(uuid())
+  name    String    @unique
+  image   String
+  Product Product[]
+}
+
+model Brand {
   id   String @id @default(uuid())
-  name String @unique
+  name String
+  logo String
 
   Product Product[]
 }
 
 model Product {
-  id          String  @id @default(uuid())
-  name        String
-  description String
-  published   Boolean @default(false)
-  categoryId  String
+  id           String       @id @default(uuid())
+  name         String
+  description  String
+  image        String
+  published    Boolean      @default(false)
+  categoryId   String
+  brandId      String?
+  occasionId   String?
+  price        Decimal
+  deliveryType DeliveryType @default(Delivery)
+  createdAt    DateTime     @default(now())
+  updatedAt    DateTime     @updatedAt
 
-  category Category @relation(fields: [categoryId], references: [id])
+  category Category  @relation(fields: [categoryId], references: [id])
+  brand    Brand?    @relation(fields: [brandId], references: [id])
+  Occasion Occasion? @relation(fields: [occasionId], references: [id])
 
   @@index([categoryId, name, description, id])
+}
+
+enum DeliveryType {
+  eGift
+  Delivery
 }
