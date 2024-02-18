@@ -1,6 +1,5 @@
 import bcrypt from "bcrypt"
 import { DeliveryType, PrismaClient } from "@prisma/client"
-import { HASH_SALT_ROUNDS } from "../src/utils/constants"
 
 const prisma = new PrismaClient()
 
@@ -10,7 +9,7 @@ async function main() {
   await prisma.product.deleteMany({})
   await prisma.category.deleteMany({})
   await prisma.occasion.deleteMany({})
-  const salt = await bcrypt.genSalt(HASH_SALT_ROUNDS)
+  const salt = await bcrypt.genSalt(15)
 
   // Create a random user
   await prisma.user.create({
