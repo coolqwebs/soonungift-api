@@ -7,9 +7,9 @@ const prisma = new PrismaClient()
 async function main() {
   // Cleanup existing users
   await prisma.user.deleteMany({})
+  await prisma.product.deleteMany({})
   await prisma.category.deleteMany({})
   await prisma.occasion.deleteMany({})
-  await prisma.product.deleteMany({})
   const salt = await bcrypt.genSalt(HASH_SALT_ROUNDS)
 
   // Create a random user
